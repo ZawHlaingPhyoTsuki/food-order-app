@@ -25,7 +25,7 @@ const TITLE_TEXT = `
 function HomeComponent() {
   const { data } = useQuery({
     queryKey: ["status"],
-    queryFn: () => eden.api.health.get(),
+    queryFn: () => eden.health.get(),
   });
 
   return (
