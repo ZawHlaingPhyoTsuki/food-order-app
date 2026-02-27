@@ -1,3 +1,6 @@
+import type { QueryClient } from "@tanstack/react-query";
+
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { HeadContent, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
@@ -7,7 +10,9 @@ import { Toaster } from "@/components/ui/sonner";
 
 import "../index.css";
 
-export interface RouterAppContext {}
+export interface RouterAppContext {
+  queryClient: QueryClient;
+}
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
@@ -47,6 +52,7 @@ function RootComponent() {
         <Toaster richColors />
       </ThemeProvider>
       <TanStackRouterDevtools position="bottom-left" />
+      <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
     </>
   );
 }

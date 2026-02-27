@@ -1,3 +1,5 @@
+import { eden } from "@/lib/eden";
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -21,12 +23,18 @@ const TITLE_TEXT = `
  `;
 
 function HomeComponent() {
+  const { data } = useQuery({
+    queryKey: ["status"],
+    queryFn: () => eden.api.health.get(),
+  });
+
   return (
     <div className="container mx-auto max-w-3xl px-4 py-2">
       <pre className="overflow-x-auto font-mono text-sm">{TITLE_TEXT}</pre>
       <div className="grid gap-6">
         <section className="rounded-lg border p-4">
           <h2 className="mb-2 font-medium">API Status</h2>
+          {JSON.stringify(data, null, 2)}
         </section>
       </div>
     </div>

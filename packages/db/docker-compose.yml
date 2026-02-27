@@ -2,7 +2,7 @@ name: food-order-app
 
 services:
   postgres:
-    image: postgres
+    image: postgres:15
     container_name: food-order-app-postgres
     environment:
       POSTGRES_DB: food-order-app
