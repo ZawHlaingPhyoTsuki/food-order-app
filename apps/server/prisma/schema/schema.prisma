@@ -48,8 +48,6 @@ model Organization {
   rejectionReason String?
   
   // Settings
-  // taxRate         Float          @default(0.07)  // 7% VAT in Thailand
-  // serviceCharge   Float          @default(0.10)  // 10% service charge
   currency        String         @default("THB")
   defaultLanguage String         @default("th")
   

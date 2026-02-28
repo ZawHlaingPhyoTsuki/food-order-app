@@ -1,8 +1,13 @@
-import { cors } from "@elysiajs/cors";
-import { env } from "@food-order-app/env/server";
 import { Elysia } from "elysia";
-import { betterAuth } from "./plugins/auth";
+import { cors } from "@elysiajs/cors";
+import openapi from "@elysiajs/openapi";
+import { env } from "@food-order-app/env/server";
+import { auth } from "./libs/auth";
+
+// Import modules
 import { todos } from "./modules/todos";
+import { admin } from "./modules/admin";
+import { restaurant } from "./modules/restaurant";
 
 const app = new Elysia()
   .use(
@@ -13,9 +18,13 @@ const app = new Elysia()
       credentials: true,
     }),
   )
-  .use(betterAuth)
+  .use(openapi())
+  .mount(auth.handler)
   .get("/health", () => ({ text: "API is healthy" }))
+  // Mount modules
   .use(todos)
+  .use(admin)
+  .use(restaurant)
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });
