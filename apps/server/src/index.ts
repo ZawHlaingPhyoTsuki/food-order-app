@@ -8,6 +8,7 @@ import { auth, authMacro } from "./libs/auth";
 import { todos } from "./modules/todos";
 import { admin } from "./modules/admin";
 import { restaurant } from "./modules/restaurant";
+import { customer } from "./modules/customer";
 
 const app = new Elysia()
   .use(
@@ -26,6 +27,42 @@ const app = new Elysia()
   .use(todos)
   .use(admin)
   .use(restaurant)
+  .use(customer)
+  // WebSocket for kitchen live updates
+  .ws("/ws/kitchen/:organizationId", {
+    open(ws) {
+      const { organizationId } = ws.data.params;
+      ws.subscribe(`kitchen:${organizationId}`);
+      ws.send({ type: "connected", organizationId });
+    },
+    message(ws, message) {
+      // Handle ping/pong for keepalive
+      if (message === "ping") {
+        ws.send({ type: "pong" });
+      }
+    },
+    close(ws) {
+      const { organizationId } = ws.data.params;
+      ws.unsubscribe(`kitchen:${organizationId}`);
+    },
+  })
+  // WebSocket for order status updates (customer-facing)
+  .ws("/ws/orders/:tableToken", {
+    open(ws) {
+      const { tableToken } = ws.data.params;
+      ws.subscribe(`table:${tableToken}`);
+      ws.send({ type: "connected", tableToken });
+    },
+    message(ws, message) {
+      if (message === "ping") {
+        ws.send({ type: "pong" });
+      }
+    },
+    close(ws) {
+      const { tableToken } = ws.data.params;
+      ws.unsubscribe(`table:${tableToken}`);
+    },
+  })
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
   });

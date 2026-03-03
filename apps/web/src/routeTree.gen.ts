@@ -13,8 +13,15 @@ import { Route as TestingRouteImport } from './routes/testing'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardTablesRouteImport } from './routes/dashboard/tables'
+import { Route as DashboardRegisterRouteImport } from './routes/dashboard/register'
+import { Route as DashboardOrdersRouteImport } from './routes/dashboard/orders'
+import { Route as DashboardMenuRouteImport } from './routes/dashboard/menu'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as AdminDashboardIndexRouteImport } from './routes/admin/dashboard/index'
+import { Route as AdminDashboardOrganizationsRouteImport } from './routes/admin/dashboard/organizations'
+import { Route as OrgSlugTableTableTokenRouteImport } from './routes/$orgSlug/table/$tableToken'
 
 const TestingRoute = TestingRouteImport.update({
   id: '/testing',
@@ -36,6 +43,31 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardTablesRoute = DashboardTablesRouteImport.update({
+  id: '/tables',
+  path: '/tables',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardRegisterRoute = DashboardRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardOrdersRoute = DashboardOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMenuRoute = DashboardMenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const authLoginRoute = authLoginRouteImport.update({
   id: '/(auth)/login',
   path: '/login',
@@ -46,30 +78,61 @@ const AdminDashboardIndexRoute = AdminDashboardIndexRouteImport.update({
   path: '/dashboard/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminDashboardOrganizationsRoute =
+  AdminDashboardOrganizationsRouteImport.update({
+    id: '/dashboard/organizations',
+    path: '/dashboard/organizations',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const OrgSlugTableTableTokenRoute = OrgSlugTableTableTokenRouteImport.update({
+  id: '/$orgSlug/table/$tableToken',
+  path: '/$orgSlug/table/$tableToken',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/testing': typeof TestingRoute
   '/login': typeof authLoginRoute
+  '/dashboard/menu': typeof DashboardMenuRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/register': typeof DashboardRegisterRoute
+  '/dashboard/tables': typeof DashboardTablesRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/$orgSlug/table/$tableToken': typeof OrgSlugTableTableTokenRoute
+  '/admin/dashboard/organizations': typeof AdminDashboardOrganizationsRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
-  '/dashboard': typeof DashboardRoute
   '/testing': typeof TestingRoute
   '/login': typeof authLoginRoute
+  '/dashboard/menu': typeof DashboardMenuRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/register': typeof DashboardRegisterRoute
+  '/dashboard/tables': typeof DashboardTablesRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/$orgSlug/table/$tableToken': typeof OrgSlugTableTableTokenRoute
+  '/admin/dashboard/organizations': typeof AdminDashboardOrganizationsRoute
   '/admin/dashboard': typeof AdminDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteRouteWithChildren
-  '/dashboard': typeof DashboardRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/testing': typeof TestingRoute
   '/(auth)/login': typeof authLoginRoute
+  '/dashboard/menu': typeof DashboardMenuRoute
+  '/dashboard/orders': typeof DashboardOrdersRoute
+  '/dashboard/register': typeof DashboardRegisterRoute
+  '/dashboard/tables': typeof DashboardTablesRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/$orgSlug/table/$tableToken': typeof OrgSlugTableTableTokenRoute
+  '/admin/dashboard/organizations': typeof AdminDashboardOrganizationsRoute
   '/admin/dashboard/': typeof AdminDashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +143,28 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/testing'
     | '/login'
+    | '/dashboard/menu'
+    | '/dashboard/orders'
+    | '/dashboard/register'
+    | '/dashboard/tables'
+    | '/dashboard/'
+    | '/$orgSlug/table/$tableToken'
+    | '/admin/dashboard/organizations'
     | '/admin/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/dashboard' | '/testing' | '/login' | '/admin/dashboard'
+  to:
+    | '/'
+    | '/admin'
+    | '/testing'
+    | '/login'
+    | '/dashboard/menu'
+    | '/dashboard/orders'
+    | '/dashboard/register'
+    | '/dashboard/tables'
+    | '/dashboard'
+    | '/$orgSlug/table/$tableToken'
+    | '/admin/dashboard/organizations'
+    | '/admin/dashboard'
   id:
     | '__root__'
     | '/'
@@ -90,15 +172,23 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/testing'
     | '/(auth)/login'
+    | '/dashboard/menu'
+    | '/dashboard/orders'
+    | '/dashboard/register'
+    | '/dashboard/tables'
+    | '/dashboard/'
+    | '/$orgSlug/table/$tableToken'
+    | '/admin/dashboard/organizations'
     | '/admin/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
-  DashboardRoute: typeof DashboardRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   TestingRoute: typeof TestingRoute
   authLoginRoute: typeof authLoginRoute
+  OrgSlugTableTableTokenRoute: typeof OrgSlugTableTableTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -131,6 +221,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/tables': {
+      id: '/dashboard/tables'
+      path: '/tables'
+      fullPath: '/dashboard/tables'
+      preLoaderRoute: typeof DashboardTablesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/register': {
+      id: '/dashboard/register'
+      path: '/register'
+      fullPath: '/dashboard/register'
+      preLoaderRoute: typeof DashboardRegisterRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/orders': {
+      id: '/dashboard/orders'
+      path: '/orders'
+      fullPath: '/dashboard/orders'
+      preLoaderRoute: typeof DashboardOrdersRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/menu': {
+      id: '/dashboard/menu'
+      path: '/menu'
+      fullPath: '/dashboard/menu'
+      preLoaderRoute: typeof DashboardMenuRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/(auth)/login': {
       id: '/(auth)/login'
       path: '/login'
@@ -145,14 +270,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/dashboard/organizations': {
+      id: '/admin/dashboard/organizations'
+      path: '/dashboard/organizations'
+      fullPath: '/admin/dashboard/organizations'
+      preLoaderRoute: typeof AdminDashboardOrganizationsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/$orgSlug/table/$tableToken': {
+      id: '/$orgSlug/table/$tableToken'
+      path: '/$orgSlug/table/$tableToken'
+      fullPath: '/$orgSlug/table/$tableToken'
+      preLoaderRoute: typeof OrgSlugTableTableTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
+  AdminDashboardOrganizationsRoute: typeof AdminDashboardOrganizationsRoute
   AdminDashboardIndexRoute: typeof AdminDashboardIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminDashboardOrganizationsRoute: AdminDashboardOrganizationsRoute,
   AdminDashboardIndexRoute: AdminDashboardIndexRoute,
 }
 
@@ -160,12 +301,33 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface DashboardRouteChildren {
+  DashboardMenuRoute: typeof DashboardMenuRoute
+  DashboardOrdersRoute: typeof DashboardOrdersRoute
+  DashboardRegisterRoute: typeof DashboardRegisterRoute
+  DashboardTablesRoute: typeof DashboardTablesRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardMenuRoute: DashboardMenuRoute,
+  DashboardOrdersRoute: DashboardOrdersRoute,
+  DashboardRegisterRoute: DashboardRegisterRoute,
+  DashboardTablesRoute: DashboardTablesRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRouteRoute: AdminRouteRouteWithChildren,
-  DashboardRoute: DashboardRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   TestingRoute: TestingRoute,
   authLoginRoute: authLoginRoute,
+  OrgSlugTableTableTokenRoute: OrgSlugTableTableTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

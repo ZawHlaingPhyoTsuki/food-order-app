@@ -1,13 +1,10 @@
-// import QRCode from 'qrcode'
+import { env } from "@food-order-app/env/server";
 
-// export async function generateQR(orgSlug: string, tableToken: string) {
-//   const url = `${process.env.FRONTEND_URL}/menu/${orgSlug}/${tableToken}`
-  
-//   // Generate QR as data URL
-//   const qrCodeDataUrl = await QRCode.toDataURL(url, {
-//     width: 300,
-//     margin: 2,
-//   })
-  
-//   return qrCodeDataUrl
-// }
+/**
+ * Generate a QR code URL for a table.
+ * Returns the customer-facing URL that the QR code should point to.
+ * For actual QR image generation, the frontend will render QR codes client-side.
+ */
+export function generateTableUrl(orgSlug: string, tableToken: string): string {
+  return `${env.CORS_ORIGIN}/${orgSlug}/table/${tableToken}`;
+}

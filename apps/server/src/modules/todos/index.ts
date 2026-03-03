@@ -6,9 +6,7 @@ export const todos = new Elysia({ prefix: "/api/todos", tags: ["todos"] })
   // .use(authMacro)
   .get(
     "/testing",
-    async () => {
-
-    },
+    async () => "testing success"
   )
   // get all todos
   .get(
