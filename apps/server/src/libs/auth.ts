@@ -25,19 +25,21 @@ export const auth = betterAuth({
   plugins: [openAPI()],
 });
 
-export const authMacro = new Elysia({ name: "better-auth" }).mount(auth.handler).macro({
-  auth: {
-    resolve: async function session({ status, request: { headers } }) {
-      const session = await auth.api.getSession({
-        headers,
-      });
+export const authMacro = new Elysia({ name: "better-auth" })
+  .mount(auth.handler)
+  .macro({
+    auth: {
+      resolve: async function session({ status, request: { headers } }) {
+        const session = await auth.api.getSession({
+          headers,
+        });
 
-      if (!session) return status(401);
+        if (!session) return status(401);
 
-      return {
-        user: session.user,
-        session: session.session,
-      };
+        return {
+          user: session.user,
+          session: session.session,
+        };
+      },
     },
-  },
-});
+  });

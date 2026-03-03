@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import openapi from "@elysiajs/openapi";
 import { env } from "@food-order-app/env/server";
-import { auth } from "./libs/auth";
+import { auth, authMacro } from "./libs/auth";
 
 // Import modules
 import { todos } from "./modules/todos";
@@ -19,7 +19,8 @@ const app = new Elysia()
     }),
   )
   .use(openapi())
-  .mount(auth.handler)
+  // .mount(auth.handler)
+  .use(authMacro)
   .get("/health", () => ({ text: "API is healthy" }))
   // Mount modules
   .use(todos)

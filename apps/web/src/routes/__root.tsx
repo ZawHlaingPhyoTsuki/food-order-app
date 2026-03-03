@@ -7,11 +7,15 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import type { eden } from "@/lib/eden";
+import type { authClient } from "@/lib/auth-client";
 
 import "../index.css";
 
 export interface RouterAppContext {
   queryClient: QueryClient;
+  authClient: typeof authClient;
+  eden: typeof eden;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -45,13 +49,10 @@ function RootComponent() {
         disableTransitionOnChange
         storageKey="vite-ui-theme"
       >
-        <div className="grid grid-rows-[auto_1fr] h-svh">
-          <Header />
           <Outlet />
-        </div>
         <Toaster richColors />
       </ThemeProvider>
-      <TanStackRouterDevtools position="bottom-left" />
+      <TanStackRouterDevtools />
       <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
     </>
   );

@@ -5,12 +5,14 @@ import ReactDOM from "react-dom/client";
 import Loader from "./components/loader";
 import { routeTree } from "./routeTree.gen";
 import { queryClient } from "./lib/query-client";
+import { authClient } from "./lib/auth-client";
+import { eden } from "./lib/eden";
 
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   defaultPendingComponent: () => <Loader />,
-  context: { queryClient },
+  context: { queryClient, authClient, eden },
   Wrap: function WrapComponent({ children }: { children: React.ReactNode }) {
     return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
   },

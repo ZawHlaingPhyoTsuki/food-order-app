@@ -1,10 +1,15 @@
 import { TodoPlain, TodoPlainInputCreate } from "@/generated/prismabox/Todo";
-import { authMacro } from "@/libs/auth";
 import { prisma } from "@/libs/prisma";
 import Elysia, { t } from "elysia";
 
 export const todos = new Elysia({ prefix: "/api/todos", tags: ["todos"] })
-  .use(authMacro)
+  // .use(authMacro)
+  .get(
+    "/testing",
+    async () => {
+
+    },
+  )
   // get all todos
   .get(
     "/",
@@ -15,7 +20,7 @@ export const todos = new Elysia({ prefix: "/api/todos", tags: ["todos"] })
       return todos;
     },
     {
-      auth: true,
+      auth: "true",
       response: t.Array(TodoPlain),
     },
   )
