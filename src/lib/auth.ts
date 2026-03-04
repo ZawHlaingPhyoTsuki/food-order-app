@@ -15,6 +15,7 @@ export const auth = betterAuth({
             role: {
                 type: [UserRole.OWNER, UserRole.SUPER_ADMIN],
                 default: UserRole.OWNER,
+                required: false,
             },
         },
     },

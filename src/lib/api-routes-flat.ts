@@ -65,7 +65,19 @@ export const API_ROUTES = {
     // Admin
     ADMIN_PROFILE: "/api/admin/profile",
     ADMIN_STATS: "/api/admin/stats",
-    ADMIN_ORGANIZATIONS_LIST: "/api/admin/organizations",
+    // ADMIN_ORGANIZATIONS_LIST:  "/api/admin/organizations",
+    ADMIN_ORGANIZATIONS_LIST: (params?: {
+        status?: string;
+        page?: number;
+        limit?: number;
+    }) => {
+        const url = new URL("/api/admin/organizations", window.location.origin);
+        if (params?.status) url.searchParams.set("status", params.status);
+        if (params?.page) url.searchParams.set("page", params.page.toString());
+        if (params?.limit)
+            url.searchParams.set("limit", params.limit.toString());
+        return url.pathname + url.search;
+    },
     ADMIN_ORGANIZATIONS_PENDING: "/api/admin/organizations/pending",
     ADMIN_ORGANIZATION_GET: (id: string) => `/api/admin/organizations/${id}`,
     ADMIN_ORGANIZATION_APPROVE: (id: string) =>
