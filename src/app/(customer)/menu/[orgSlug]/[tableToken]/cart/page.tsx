@@ -170,7 +170,7 @@ export default function CartPage() {
                 size="lg"
             >
                 {submitOrder.isPending ? (
-                    <>Submitting...</>
+                    "Submitting..."
                 ) : (
                     <>
                         <Send className="h-5 w-5 mr-2" />

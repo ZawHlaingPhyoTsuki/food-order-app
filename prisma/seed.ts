@@ -1,10 +1,9 @@
-import type { OrgStatus } from "@/app/generated/prisma/enums";
 import "dotenv/config";
 import { faker } from "@faker-js/faker";
 import { PrismaPg } from "@prisma/adapter-pg";
 import * as bcrypt from "bcryptjs";
 import { Pool } from "pg";
-import { PrismaClient } from "@/app/generated/prisma/client";
+import { type OrgStatus, PrismaClient } from "@/app/generated/prisma/client";
 import { auth } from "@/lib/auth";
 
 const connectionString = `${process.env.DATABASE_URL}`;
@@ -332,8 +331,8 @@ async function main() {
             password: "admin123",
             name: "Super Admin",
             role: "SUPER_ADMIN",
-        }
-    })
+        },
+    });
 
     console.log("✅ Admin created:", adminRes.user.email);
 

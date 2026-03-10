@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { DashboardHeader } from "@/components/dashboard/header";
@@ -27,6 +28,27 @@ export default function DashboardLayout({
 
     if (!session) {
         return null;
+    }
+
+    if (session.user.role !== "OWNER") {
+        console.log(
+            "Unauthorized access attempt to dashboard by user:",
+            session.user,
+        );
+        return (
+            <div>
+                <h1 className="text-2xl font-bold">Access Denied</h1>
+                <p>You do not have permission to access this page.</p>
+                {session.user.role === "SUPER_ADMIN" && (
+                    <Link
+                        href="/admin"
+                        className="text-blue-500 hover:underline"
+                    >
+                        Admin Dashboard
+                    </Link>
+                )}
+            </div>
+        );
     }
 
     return (
