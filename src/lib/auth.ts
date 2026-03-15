@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { UserRole } from "@/app/generated/prisma/enums";
+import { UserRole } from "../../prisma/generated/enums";
 import prisma from "./prisma";
 
 export const auth = betterAuth({

@@ -3,8 +3,8 @@ import { faker } from "@faker-js/faker";
 import { PrismaPg } from "@prisma/adapter-pg";
 import * as bcrypt from "bcryptjs";
 import { Pool } from "pg";
-import { type OrgStatus, PrismaClient } from "./generated/client";
 import { auth } from "@/lib/auth";
+import { type OrgStatus, PrismaClient } from "./generated/client";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 const pool = new Pool({ connectionString });
